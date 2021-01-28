@@ -10,6 +10,10 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
+import java.util.Locale;
 
 /**
  * Created by LaunchCode
@@ -65,23 +69,70 @@ public class JobData {
      * @param value Value of teh field to search for
      * @return List of all jobs matching the criteria
      */
-    public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
 
+//    public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
+//
+//        // load data, if not already loaded
+//        loadData();
+//
+//        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+//        value=value.toLowerCase();
+//
+//        if (column.equals("all")) {
+//            for(int i = 0; i <allJobs.size(); i++) {
+//                String job = "";
+//                for (Map.Entry<String, String> entry : allJobs.get(i).entrySet()) {
+//                    Object cell_val = entry.getValue();
+//                    job = job + " " + cell_val;
+//                }
+//                job = job.toLowerCase();
+//
+//                if (job.contains(value)) {
+//                    jobs.add(allJobs.get(i));
+//                }
+//            }
+//            return jobs;
+//
+//        } else {
+//            for (HashMap<String, String> row : allJobs) {
+//                String aValue = row.get(column);
+//                aValue = aValue.toLowerCase();
+//
+//                if (aValue.contains(value)) {
+//                    jobs.add(row);
+//                }
+//            }
+//        }
+//
+//        return jobs;
+//    }
+    public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
         // load data, if not already loaded
         loadData();
-
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
         for (HashMap<String, String> row : allJobs) {
-
             String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+            aValue = aValue.toLowerCase();
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
-
         return jobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue (String value) {
+        loadData();
+        ArrayList<HashMap<String, String>> jobsResults = new ArrayList<>();
+        for (HashMap<String, String> row : allJobs) {
+            for (Map.Entry<String, String> entry : row.entrySet()) {
+                String aValue = entry.getValue();
+                if (aValue.contains(value)) {
+                    jobsResults.add(row);
+                }
+            }
+        }
+        return jobsResults;
+
     }
 
     /**
